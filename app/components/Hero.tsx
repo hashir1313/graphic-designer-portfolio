@@ -69,7 +69,14 @@ export default function Hero() {
                 Crafting visual stories that inspire and engage
               </span>
             </p>
-            
+
+            {/* Description */}
+            <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
+              Transforming ideas into captivating visuals. Specializing in brand
+              identity, motion graphics, and video production that tells your
+              story with impact.
+            </p>
+
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 mt-4">
               <Button
