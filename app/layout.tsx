@@ -17,6 +17,21 @@ export const metadata: Metadata = {
   title: "Prakash | Graphic Designer & Video Editor Portfolio",
   description:
     "Graphic Designer & Video Editor with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+    ],
+    apple: "/apple-touch-icon.png",
+    other: [
+      {
+        rel: "apple-mobile-web-app-title",
+        content: "Portfolio",
+      },
+    ],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
