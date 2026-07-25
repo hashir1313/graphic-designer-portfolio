@@ -4,17 +4,40 @@ import { Mail } from "lucide-react";
 import Image from "next/image";
 import { useRef } from "react";
 import Button from "./Button";
-import { EMAIL } from "../layout";
+import { EMAIL } from "../../lib/constants";
+import { urlFor } from "../../lib/sanity/image";
 
-export default function Hero() {
+interface Profile {
+  name?: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  profileImage?: any;
+  skills?: string[];
+  email?: string;
+}
+
+interface HeroProps {
+  profile?: Profile;
+}
+
+export default function Hero({ profile }: HeroProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const skills = [
-    "Graphic Design",
-    "Video Editing",
-    "Motion Graphics",
-    "Brand Identity",
-  ];
+  const name = profile?.name || "Prakash";
+  const title = profile?.title || "Graphic Designer & Video Editor";
+  const subtitle = profile?.subtitle || "Crafting visual stories that inspire and engage";
+  const description =
+    profile?.description ||
+    "Transforming ideas into captivating visuals. Specializing in brand identity, motion graphics, and video production that tells your story with impact.";
+  const skills = profile?.skills && profile.skills.length > 0
+    ? profile.skills
+    : ["Graphic Design", "Video Editing", "Motion Graphics", "Brand Identity"];
+  const email = profile?.email || EMAIL;
+
+  const profileImageUrl = profile?.profileImage
+    ? urlFor(profile.profileImage).width(300).height(300).url()
+    : "/assets/profile-picture.png";
 
   return (
     <section
@@ -57,24 +80,22 @@ export default function Hero() {
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-white leading-tight">
               <span className="block">I'm</span>
               <span className="block bg-linear-to-b from-white via-white to-white/70 bg-clip-text text-transparent">
-                Prakash
+                {name}
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 font-light max-w-xl">
-              Graphic Designer & Video Editor
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 font-light max-w-xl">
+              {title}
               <br />
               <span className="text-white/60">
-                Crafting visual stories that inspire and engage
+                {subtitle}
               </span>
-            </p>
+            </div>
 
             {/* Description */}
             <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
-              Transforming ideas into captivating visuals. Specializing in brand
-              identity, motion graphics, and video production that tells your
-              story with impact.
+              {description}
             </p>
 
             {/* CTA Buttons */}
@@ -119,8 +140,8 @@ export default function Hero() {
                 {/* Profile Image */}
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden border-2 border-white/30 shrink-0">
                   <Image
-                    src="/assets/profile-picture.png"
-                    alt="Prakash - Graphic Designer & Video Editor"
+                    src={profileImageUrl}
+                    alt={`${name} - ${title}`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 80px, (max-width: 768px) 96px, (max-width: 1024px) 112px, 128px"
@@ -134,17 +155,17 @@ export default function Hero() {
                     Available for Projects
                   </p>
                   <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mt-1">
-                    Prakash Katariya
+                    {name === "Prakash" ? "Prakash Katariya" : name}
                   </p>
                   <p className="text-xs sm:text-sm md:text-base text-white/60 mt-1">
-                    Graphic Designer & Video Editor
+                    {title}
                   </p>
                   <Button
                     variant="blank"
                     size="sm"
                     icon={<Mail className="w-4 h-4" />}
                     className="mt-3 sm:mt-4 w-fit"
-                    onClick={() => (window.location.href = `mailto:${EMAIL}`)}
+                    onClick={() => (window.location.href = `mailto:${email}`)}
                   >
                     Let's Collaborate
                   </Button>

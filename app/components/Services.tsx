@@ -5,23 +5,44 @@ import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import { ArrowRight, Palette, Video, Zap, Building2 } from "lucide-react";
 
+import { urlFor } from "../../lib/sanity/image";
+
 interface Service {
-  id: number;
+  _id: string;
   title: string;
   description: string;
-  image: string;
-  icon: React.ReactNode;
+  image: any;
+  icon: string;
   features: string[];
 }
 
-const services: Service[] = [
+interface ServicesProps {
+  services?: Service[];
+}
+
+const getIcon = (iconName: string) => {
+  switch (iconName) {
+    case "Palette":
+      return <Palette className="w-8 h-8" />;
+    case "Video":
+      return <Video className="w-8 h-8" />;
+    case "Zap":
+      return <Zap className="w-8 h-8" />;
+    case "Building2":
+      return <Building2 className="w-8 h-8" />;
+    default:
+      return <Palette className="w-8 h-8" />;
+  }
+};
+
+const staticServices: Service[] = [
   {
-    id: 1,
+    _id: "1",
     title: "Graphic Design",
     description:
       "Creating visually stunning designs that communicate your brand's message effectively. From logos to marketing materials, I bring ideas to life through creative visual storytelling.",
     image: "/assets/services/service-image1.png",
-    icon: <Palette className="w-8 h-8" />,
+    icon: "Palette",
     features: [
       "Logo Design",
       "Brand Identity",
@@ -30,12 +51,12 @@ const services: Service[] = [
     ],
   },
   {
-    id: 2,
+    _id: "2",
     title: "Video Editing",
     description:
       "Professional video production and post-production services. Transforming raw footage into compelling narratives with cinematic quality and engaging storytelling.",
     image: "/assets/services/service-image2.png",
-    icon: <Video className="w-8 h-8" />,
+    icon: "Video",
     features: [
       "Video Production",
       "Post-Production",
@@ -44,12 +65,12 @@ const services: Service[] = [
     ],
   },
   {
-    id: 3,
+    _id: "3",
     title: "Motion Graphics",
     description:
       "Dynamic animated graphics that capture attention and enhance your brand presence. From explainer videos to animated logos, creating motion that moves audiences.",
     image: "/assets/services/service-image3.png",
-    icon: <Zap className="w-8 h-8" />,
+    icon: "Zap",
     features: [
       "2D Animation",
       "3D Motion",
@@ -58,12 +79,12 @@ const services: Service[] = [
     ],
   },
   {
-    id: 4,
+    _id: "4",
     title: "Brand Identity",
     description:
       "Comprehensive brand identity solutions that establish a strong visual presence. Building cohesive brand systems that resonate with your target audience.",
     image: "/assets/services/service-image4.png",
-    icon: <Building2 className="w-8 h-8" />,
+    icon: "Building2",
     features: [
       "Brand Strategy",
       "Visual Identity",
@@ -73,7 +94,8 @@ const services: Service[] = [
   },
 ];
 
-export default function Services() {
+export default function Services({ services }: ServicesProps) {
+  const displayServices = services && services.length > 0 ? services : staticServices;
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -119,9 +141,9 @@ export default function Services() {
           animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10"
         >
-          {services.map((service, index) => (
+          {displayServices.map((service, index) => (
             <motion.div
-              key={service.id}
+              key={service._id}
               variants={{
                 hidden: { y: 50, opacity: 0 },
                 visible: {
@@ -141,7 +163,11 @@ export default function Services() {
                 {/* Image Section */}
                 <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden">
                   <Image
-                    src={service.image}
+                    src={
+                      typeof service.image === "string"
+                        ? service.image
+                        : urlFor(service.image).width(800).height(600).url()
+                    }
                     alt={service.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -149,11 +175,11 @@ export default function Services() {
                   />
                   {/* Overlay Gradient */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
-
+ 
                   {/* Icon Badge */}
                   <div className="absolute top-6 left-6 z-10">
                     <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-xl p-4 group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-                      <div className="text-white">{service.icon}</div>
+                      <div className="text-white">{getIcon(service.icon)}</div>
                     </div>
                   </div>
 

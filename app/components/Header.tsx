@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import Link from "next/link";
-import { EMAIL } from "../layout";
+import { EMAIL } from "../../lib/constants";
+import { Mail } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -14,7 +15,16 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
-export default function Header() {
+interface Profile {
+  email?: string;
+}
+
+interface HeaderProps {
+  profile?: Profile;
+}
+
+export default function Header({ profile }: HeaderProps) {
+  const email = profile?.email || EMAIL;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -177,13 +187,13 @@ export default function Header() {
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                   {/* Left - Contact Info */}
                   <div className="flex flex-col gap-2 text-sm text-white/80">
-                    <a
-                      href={`mailto:${EMAIL}`}
-                      className="underline hover:no-underline hover:text-white transition-colors"
+                    <Link
+                      href={`mailto:${email}`}
+                      className="flex items-center gap-2 p-2 hover:bg-white/5 rounded-lg transition-colors w-full"
                     >
-                      <span className="mr-2">•</span>
-                      {EMAIL}
-                    </a>
+                      <Mail className="w-4 h-4 shrink-0 text-white/60" />
+                      <span className="truncate">{email}</span>
+                    </Link>
                   </div>
 
                   {/* Center - Legal Links */}

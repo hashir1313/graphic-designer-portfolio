@@ -4,10 +4,28 @@ import { Download, Mail, MapPin } from "lucide-react";
 import SocialsMenu from "./SocialsMenu";
 import Button from "./Button";
 import Link from "next/link";
-import { EMAIL } from "../layout";
+import { EMAIL } from "../../lib/constants";
 
-const Footer = () => {
+interface Profile {
+  email?: string;
+  location?: string;
+  socials?: any[];
+  resume?: {
+    asset?: {
+      url?: string;
+    };
+  };
+}
+
+interface FooterProps {
+  profile?: Profile;
+}
+
+const Footer = ({ profile }: FooterProps) => {
   const currentYear = new Date().getFullYear();
+  const email = profile?.email || EMAIL;
+  const location = profile?.location || "Surat, Gujarat, India";
+  const resumeUrl = profile?.resume?.asset?.url;
 
   return (
     <footer className="relative w-full bg-black/95 backdrop-blur-md border-t border-white/10 mt-auto">
@@ -31,7 +49,7 @@ const Footer = () => {
 
           {/* Socials Menu */}
           <section className="flex md:flex-col justify-center md:justify-start md:items-end">
-            <SocialsMenu />
+            <SocialsMenu socials={profile?.socials} />
           </section>
 
           {/* Get in Touch */}
@@ -45,7 +63,17 @@ const Footer = () => {
                   Get in Touch
                 </Button>
               </Link>
-              <Button size="md" icon={<Download className="w-4 h-4" />}>
+              <Button
+                size="md"
+                icon={<Download className="w-4 h-4" />}
+                onClick={() => {
+                  if (resumeUrl) {
+                    window.open(resumeUrl, "_blank");
+                  } else {
+                    alert("Resume/CV is not uploaded yet!");
+                  }
+                }}
+              >
                 Download CV
               </Button>
             </div>
@@ -73,16 +101,16 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
             <div className="hover:text-white transition-colors flex items-center gap-4">
               <Link
-                href={`mailto:${EMAIL}`}
+                href={`mailto:${email}`}
                 className="flex items-center gap-2"
               >
                 <Mail className="w-4 h-4" />
-                <span>{EMAIL}</span>
+                <span>{email}</span>
               </Link>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
-              <span>Surat, Gujarat, India</span>
+              <span>{location}</span>
             </div>
           </div>
         </div>

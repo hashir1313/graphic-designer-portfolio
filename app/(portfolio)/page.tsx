@@ -1,9 +1,10 @@
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Projects from "./components/Projects";
-import Services from "./components/Services";
-import Contact from "./components/Contact";
-import { Metadata } from "next";
+import Hero from "../components/Hero";
+import About from "../components/About";
+import Projects from "../components/Projects";
+import Services from "../components/Services";
+import Contact from "../components/Contact";
+import { Metadata, Viewport } from "next";
+import { client } from "../../lib/sanity/client";
 
 export const metadata: Metadata = {
   title: "Prakash | Graphic Designer & Video Editor Portfolio",
@@ -33,14 +34,39 @@ export const metadata: Metadata = {
     description:
       "Graphic Designer & Video Editor with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.",
   },
-  viewport: "width=device-width, initial-scale=1.0",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#000000",
 };
 
-export default function Home() {
+export default async function Home() {
+  const profile = await client
+    .fetch(`*[_type == "profile"][0] { name, title, subtitle, description, aboutMe1, aboutMe2, profileImage, email, location, skills }`)
+    .catch((err) => {
+      console.error("Sanity fetch error (profile):", err);
+      return null;
+    });
+
+  const projects = await client
+    .fetch(`*[_type == "project"] | order(_createdAt desc) { _id, title, description, image, category, projectLink }`)
+    .catch((err) => {
+      console.error("Sanity fetch error (projects):", err);
+      return null;
+    });
+
+  const services = await client
+    .fetch(`*[_type == "service"] | order(title asc) { _id, title, description, image, icon, features }`)
+    .catch((err) => {
+      console.error("Sanity fetch error (services):", err);
+      return null;
+    });
+
   return (
     <>
-      <Hero />
+      <Hero profile={profile} />
       {/* Unified Background for All Sections */}
       <div className="relative w-full bg-linear-to-br from-black via-gray-900 to-black">
         {/* Unified Background Pattern */}
@@ -55,13 +81,12 @@ export default function Home() {
         </div>
         {/* Sections Container */}
         <div className="relative z-10">
-          <About />
-          <Projects />
-          <Services />
-          <Contact />
+          <About profile={profile} />
+          <Projects projects={projects} />
+          <Services services={services} />
+          <Contact profile={profile} />
         </div>
       </div>
-      {/* Add more sections below as needed */}
     </>
   );
 }

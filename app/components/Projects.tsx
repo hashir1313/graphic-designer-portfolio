@@ -5,17 +5,24 @@ import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 
+import { urlFor } from "../../lib/sanity/image";
+
 interface Project {
-  id: number;
-  image: string;
+  _id: string;
+  image: any;
   title: string;
   description: string;
   category: string;
+  projectLink?: string;
 }
 
-const projects: Project[] = [
+interface ProjectsProps {
+  projects?: Project[];
+}
+
+const staticProjects: Project[] = [
   {
-    id: 1,
+    _id: "1",
     image: "/assets/projects/project-iamge1.png",
     title: "Brand Identity Design",
     description:
@@ -23,7 +30,7 @@ const projects: Project[] = [
     category: "Branding",
   },
   {
-    id: 2,
+    _id: "2",
     image: "/assets/projects/project-iamge2.png",
     title: "Motion Graphics Showreel",
     description:
@@ -31,7 +38,7 @@ const projects: Project[] = [
     category: "Motion Graphics",
   },
   {
-    id: 3,
+    _id: "3",
     image: "/assets/projects/project-iamge3.png",
     title: "Video Production Portfolio",
     description:
@@ -39,7 +46,7 @@ const projects: Project[] = [
     category: "Video Editing",
   },
   {
-    id: 4,
+    _id: "4",
     image: "/assets/projects/project-iamge4.png",
     title: "Creative Campaign Design",
     description:
@@ -47,7 +54,7 @@ const projects: Project[] = [
     category: "Graphic Design",
   },
   {
-    id: 5,
+    _id: "5",
     image: "/assets/projects/project-iamge5.png",
     title: "Product Launch Video",
     description:
@@ -55,7 +62,7 @@ const projects: Project[] = [
     category: "Video Production",
   },
   {
-    id: 6,
+    _id: "6",
     image: "/assets/projects/project-iamge6.png",
     title: "Digital Marketing Content",
     description:
@@ -64,7 +71,8 @@ const projects: Project[] = [
   },
 ];
 
-export default function Projects() {
+export default function Projects({ projects }: ProjectsProps) {
+  const displayProjects = projects && projects.length > 0 ? projects : staticProjects;
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -111,14 +119,16 @@ export default function Projects() {
           animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10"
         >
-          {projects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <motion.a
-              key={project.id}
-              href={`#project-${project.id}`}
+              key={project._id}
+              href={project.projectLink || `#project-${project._id}`}
               onClick={(e) => {
-                e.preventDefault();
-                // Fake link - can be replaced with actual project page
-                console.log(`Opening project: ${project.title}`);
+                if (!project.projectLink) {
+                  e.preventDefault();
+                  // Fake link - can be replaced with actual project page
+                  console.log(`Opening project: ${project.title}`);
+                }
               }}
               variants={{
                 hidden: { y: 50, opacity: 0 },
@@ -139,7 +149,11 @@ export default function Projects() {
                 {/* Image Container */}
                 <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-72 xl:h-80 overflow-hidden">
                   <Image
-                    src={project.image}
+                    src={
+                      typeof project.image === "string"
+                        ? project.image
+                        : urlFor(project.image).width(600).height(450).url()
+                    }
                     alt={project.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"

@@ -4,9 +4,20 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Mail, MapPin, Send } from "lucide-react";
 import Button from "./Button";
-import { EMAIL } from "../layout";
+import { EMAIL } from "../../lib/constants";
 
-export default function Contact() {
+interface Profile {
+  email?: string;
+  location?: string;
+}
+
+interface ContactProps {
+  profile?: Profile;
+}
+
+export default function Contact({ profile }: ContactProps) {
+  const email = profile?.email || EMAIL;
+  const location = profile?.location || "Surat, Gujarat, India";
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -52,7 +63,7 @@ export default function Contact() {
 
               {/* Email */}
               <motion.a
-                href={`mailto:${EMAIL}`}
+                href={`mailto:${email}`}
                 whileHover={{ x: 5 }}
                 className="flex items-start gap-4 md:gap-6 p-4 md:p-6 bg-white/5 rounded-xl hover:bg-white/10 transition-all duration-300 mb-4 md:mb-6 group"
               >
@@ -64,7 +75,7 @@ export default function Contact() {
                     Email
                   </p>
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-white group-hover:text-white transition-colors">
-                    {EMAIL}
+                    {email}
                   </p>
                 </div>
               </motion.a>
@@ -82,7 +93,7 @@ export default function Contact() {
                     Location
                   </p>
                   <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                    Surat, Gujarat, India
+                    {location}
                   </p>
                 </div>
               </motion.div>
@@ -94,7 +105,7 @@ export default function Contact() {
                   size="md"
                   icon={<Send className="w-5 h-5" />}
                   className="w-full sm:w-auto"
-                  onClick={() => (window.location.href = `mailto:${EMAIL}`)}
+                  onClick={() => (window.location.href = `mailto:${email}`)}
                 >
                   Send Email
                 </Button>
@@ -130,7 +141,7 @@ export default function Contact() {
                         Current Location
                       </p>
                       <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl font-semibold">
-                        Surat, Gujarat, India
+                        {location}
                       </p>
                     </div>
                   </div>

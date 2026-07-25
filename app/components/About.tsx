@@ -5,7 +5,22 @@ import { useInView } from "react-intersection-observer";
 import Button from "./Button";
 import { ArrowRight } from "lucide-react";
 
-export default function About() {
+interface Profile {
+  aboutMe1?: string;
+  aboutMe2?: string;
+}
+
+interface AboutProps {
+  profile?: Profile;
+}
+
+export default function About({ profile }: AboutProps) {
+  const aboutMe1 =
+    profile?.aboutMe1 ||
+    "I'm a passionate Graphic Designer and Video Editor dedicated to transforming creative visions into compelling visual narratives. With expertise spanning brand identity, motion graphics, and video production, I craft designs that resonate and engage.";
+  const aboutMe2 =
+    profile?.aboutMe2 ||
+    "Every project is an opportunity to blend creativity with strategy, creating visual stories that not only look exceptional but also drive results and leave lasting impressions.";
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -70,28 +85,27 @@ export default function About() {
               }}
               className="flex flex-col justify-center text-white space-y-6 md:space-y-8"
             >
-              <motion.p
-                initial={{ y: 30, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-white/80"
-              >
-                I'm a passionate Graphic Designer and Video Editor dedicated to
-                transforming creative visions into compelling visual narratives.
-                With expertise spanning brand identity, motion graphics, and
-                video production, I craft designs that resonate and engage.
-              </motion.p>
+              {aboutMe1 && (
+                <motion.p
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-white/80"
+                >
+                  {aboutMe1}
+                </motion.p>
+              )}
 
-              <motion.p
-                initial={{ y: 30, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-white/80"
-              >
-                Every project is an opportunity to blend creativity with
-                strategy, creating visual stories that not only look exceptional
-                but also drive results and leave lasting impressions.
-              </motion.p>
+              {aboutMe2 && (
+                <motion.p
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={inView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-white/80"
+                >
+                  {aboutMe2}
+                </motion.p>
+              )}
             </motion.div>
           </div>
         </motion.div>
