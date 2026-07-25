@@ -24,14 +24,14 @@ export const metadata: Metadata = {
       { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
     ],
     apple: "/apple-touch-icon.png",
-    other: [
-      {
-        rel: "apple-mobile-web-app-title",
-        content: "Portfolio",
-      },
-    ],
   },
   manifest: "/site.webmanifest",
+  other: [
+    {
+      rel: "apple-mobile-web-app-title",
+      content: "Portfolio",
+    },
+  ],
 };
 
 export default function RootLayout({
