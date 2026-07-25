@@ -54,11 +54,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-img,
-picture,
-video,
-canvas,
-svg {
+.portfolio img,
+.portfolio picture,
+.portfolio video,
+.portfolio canvas,
+.portfolio svg {
   display: block;
   max-width: 100%;
   height: auto;

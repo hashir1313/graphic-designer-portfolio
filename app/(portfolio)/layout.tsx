@@ -18,7 +18,7 @@ export default async function PortfolioLayout({
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="portfolio flex flex-col min-h-screen">
       <SplashScreen name={profile?.name} />
       <Header profile={profile} />
       <main className="flex-1">{children}</main>
