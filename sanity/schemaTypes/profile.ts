@@ -24,11 +24,7 @@ export const profileType = defineType({
       description: 'e.g., Crafting visual stories that inspire and engage',
       type: 'string',
     }),
-    defineField({
-      name: 'description',
-      title: 'Hero Description',
-      type: 'text',
-    }),
+
     defineField({
       name: 'aboutMe1',
       title: 'About Me Paragraph 1',

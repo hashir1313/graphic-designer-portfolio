@@ -44,7 +44,7 @@ export const viewport: Viewport = {
 
 export default async function Home() {
   const profile = await client
-    .fetch(`*[_type == "profile"][0] { name, title, subtitle, description, aboutMe1, aboutMe2, profileImage, email, location, skills }`)
+    .fetch(`*[_type == "profile"][0] { name, title, subtitle, aboutMe1, aboutMe2, profileImage, email, location, skills }`)
     .catch((err) => {
       console.error("Sanity fetch error (profile):", err);
       return null;

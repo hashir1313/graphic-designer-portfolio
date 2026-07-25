@@ -2,9 +2,13 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
-export default function SplashScreen() {
+interface SplashScreenProps {
+  name?: string;
+}
+
+export default function SplashScreen({ name }: SplashScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
-  const text = "Prakash®";
+  const text = name ? `${name}®` : "Prakash®";
   const characters = text.split("");
 
   // Animation timing controls

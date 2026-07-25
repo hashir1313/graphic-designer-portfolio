@@ -11,7 +11,7 @@ interface Profile {
   name?: string;
   title?: string;
   subtitle?: string;
-  description?: string;
+
   profileImage?: any;
   skills?: string[];
   email?: string;
@@ -27,9 +27,6 @@ export default function Hero({ profile }: HeroProps) {
   const name = profile?.name || "Prakash";
   const title = profile?.title || "Graphic Designer & Video Editor";
   const subtitle = profile?.subtitle || "Crafting visual stories that inspire and engage";
-  const description =
-    profile?.description ||
-    "Transforming ideas into captivating visuals. Specializing in brand identity, motion graphics, and video production that tells your story with impact.";
   const skills = profile?.skills && profile.skills.length > 0
     ? profile.skills
     : ["Graphic Design", "Video Editing", "Motion Graphics", "Brand Identity"];
@@ -73,7 +70,7 @@ export default function Hero({ profile }: HeroProps) {
 
       {/* Main Content Container */}
       <div className="relative z-10 w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] lg:w-[calc(100%-5rem)] max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center">
           {/* Left Column - Main Content */}
           <div className="flex flex-col space-y-6 lg:space-y-8">
             {/* Main Heading */}
@@ -92,11 +89,6 @@ export default function Hero({ profile }: HeroProps) {
                 {subtitle}
               </span>
             </div>
-
-            {/* Description */}
-            <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed max-w-2xl">
-              {description}
-            </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 mt-4">

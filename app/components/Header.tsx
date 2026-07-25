@@ -16,6 +16,7 @@ const navLinks = [
 ];
 
 interface Profile {
+  name?: string;
   email?: string;
 }
 
@@ -24,6 +25,7 @@ interface HeaderProps {
 }
 
 export default function Header({ profile }: HeaderProps) {
+  const name = profile?.name || "prakash";
   const email = profile?.email || EMAIL;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -94,7 +96,7 @@ export default function Header({ profile }: HeaderProps) {
           <div className="flex h-16 md:h-20 items-center justify-between">
             {/* Logo */}
             <a href="/" className="flex items-center z-10">
-              <Logo />
+              <Logo name={name} />
             </a>
 
             {/* Desktop Navigation - Centered */}
@@ -144,7 +146,7 @@ export default function Header({ profile }: HeaderProps) {
               exit={{ y: -50, opacity: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
             >
-              <Logo />
+              <Logo name={name} />
               <button
                 onClick={closeMenu}
                 className="w-8 h-8 flex items-center justify-center relative"
@@ -208,7 +210,7 @@ export default function Header({ profile }: HeaderProps) {
 
                   {/* Right - Copyright */}
                   <p className="text-sm text-white/80">
-                    © 2025 prakash<sup className="text-xs">®</sup> Studio
+                    © 2025 {name.toLowerCase()}<sup className="text-xs">®</sup> Studio
                   </p>
                 </div>
               </div>
