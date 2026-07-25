@@ -3,16 +3,20 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import { ArrowRight, Palette, Video, Zap, Building2 } from "lucide-react";
-
 import { urlFor } from "../../lib/sanity/image";
+import * as Icons from "react-icons/fi";
+
+interface IconData {
+  provider: string;
+  name: string;
+}
 
 interface Service {
   _id: string;
   title: string;
   description: string;
   image: any;
-  icon: string;
+  icon: IconData;
   features: string[];
 }
 
@@ -20,19 +24,14 @@ interface ServicesProps {
   services?: Service[];
 }
 
-const getIcon = (iconName: string) => {
-  switch (iconName) {
-    case "Palette":
-      return <Palette className="w-8 h-8" />;
-    case "Video":
-      return <Video className="w-8 h-8" />;
-    case "Zap":
-      return <Zap className="w-8 h-8" />;
-    case "Building2":
-      return <Building2 className="w-8 h-8" />;
-    default:
-      return <Palette className="w-8 h-8" />;
+const getIcon = (icon: IconData | string) => {
+  if (typeof icon === "object" && icon?.name) {
+    const IconComponent = Icons[icon.name as keyof typeof Icons];
+    if (IconComponent) {
+      return <IconComponent className="w-8 h-8" />;
+    }
   }
+  return <Icons.FiPalette className="w-8 h-8" />;
 };
 
 const staticServices: Service[] = [
@@ -42,7 +41,7 @@ const staticServices: Service[] = [
     description:
       "Creating visually stunning designs that communicate your brand's message effectively. From logos to marketing materials, I bring ideas to life through creative visual storytelling.",
     image: "/assets/services/service-image1.png",
-    icon: "Palette",
+    icon: { provider: "fi", name: "FiPalette" },
     features: [
       "Logo Design",
       "Brand Identity",
@@ -56,7 +55,7 @@ const staticServices: Service[] = [
     description:
       "Professional video production and post-production services. Transforming raw footage into compelling narratives with cinematic quality and engaging storytelling.",
     image: "/assets/services/service-image2.png",
-    icon: "Video",
+    icon: { provider: "fi", name: "FiVideo" },
     features: [
       "Video Production",
       "Post-Production",
@@ -70,7 +69,7 @@ const staticServices: Service[] = [
     description:
       "Dynamic animated graphics that capture attention and enhance your brand presence. From explainer videos to animated logos, creating motion that moves audiences.",
     image: "/assets/services/service-image3.png",
-    icon: "Zap",
+    icon: { provider: "fi", name: "FiZap" },
     features: [
       "2D Animation",
       "3D Motion",
@@ -84,7 +83,7 @@ const staticServices: Service[] = [
     description:
       "Comprehensive brand identity solutions that establish a strong visual presence. Building cohesive brand systems that resonate with your target audience.",
     image: "/assets/services/service-image4.png",
-    icon: "Building2",
+    icon: { provider: "fi", name: "FiGrid" },
     features: [
       "Brand Strategy",
       "Visual Identity",

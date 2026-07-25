@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
+import { iconPicker } from 'sanity-plugin-icon-picker'
 import { schemaTypes } from './sanity/schemaTypes'
 
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
   basePath: '/studio',
 
   plugins: [
+    iconPicker(),
     structureTool({
       structure: (S) =>
         S.list()
