@@ -85,11 +85,11 @@ const Footer = ({ profile }: FooterProps) => {
               <p>© {currentYear} All Rights Reserved.</p>
               <p className="hover:text-white transition-colors">
                 <Link
-                  href="https://mayurnakum-portfolio.vercel.app"
+                  href="https://hashir-dev-portfolio.netlify.app"
                   target="_blank"
                   className="mt-1"
                 >
-                  Made with 🤍 by Mayur Nakum
+                  Made with 🤍 by Hashir
                 </Link>
               </p>
             </div>

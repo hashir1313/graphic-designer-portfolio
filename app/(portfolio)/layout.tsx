@@ -11,7 +11,7 @@ export default async function PortfolioLayout({
   children: React.ReactNode;
 }>) {
   const profile = await client.fetch(
-    `*[_type == "profile"][0] { name, email, socials, resume { asset->{ url } } }`
+    `*[_type == "profile"][0] { name, email, location, socials, resume { asset->{ url } } }`
   ).catch((err) => {
     console.error("Sanity fetch error in layout: ", err);
     return null;

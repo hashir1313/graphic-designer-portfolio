@@ -70,7 +70,7 @@ export default function Hero({ profile }: HeroProps) {
 
       {/* Main Content Container */}
       <div className="relative z-10 w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)] md:w-[calc(100%-4rem)] lg:w-[calc(100%-5rem)] max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-12 items-center">
           {/* Left Column - Main Content */}
           <div className="flex flex-col space-y-6 lg:space-y-8">
             {/* Main Heading */}
