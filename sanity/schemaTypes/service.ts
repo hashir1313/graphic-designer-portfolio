@@ -28,10 +28,16 @@ export const serviceType = defineType({
     }),
     defineField({
       name: 'icon',
-      title: 'Icon',
-      type: 'iconPicker',
+      title: 'Icon Name',
+      description: 'Choose which Lucide icon to display (e.g., Palette, Video, Zap, Building2)',
+      type: 'string',
       options: {
-        outputFormat: 'react',
+        list: [
+          { title: 'Palette (Graphic Design)', value: 'Palette' },
+          { title: 'Video (Video Editing)', value: 'Video' },
+          { title: 'Zap (Motion Graphics)', value: 'Zap' },
+          { title: 'Building2 (Brand Identity)', value: 'Building2' },
+        ],
       },
       validation: (Rule) => Rule.required(),
     }),
