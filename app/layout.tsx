@@ -34,6 +34,12 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: "/apple-touch-icon.png",
     },
     manifest: "/site.webmanifest",
+    other: [
+      {
+        rel: "apple-mobile-web-app-title",
+        content: "Portfolio",
+      },
+    ],
   };
 }
 
