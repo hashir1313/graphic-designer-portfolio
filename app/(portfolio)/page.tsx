@@ -6,35 +6,42 @@ import Contact from "../components/Contact";
 import { Metadata, Viewport } from "next";
 import { client } from "../../lib/sanity/client";
 
-export const metadata: Metadata = {
-  title: "Prakash | Graphic Designer & Video Editor Portfolio",
-  description:
-    "Graphic Designer & Video Editor with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.",
-  keywords: [
-    "Graphic Designer",
-    "Video Editor",
-    "Adobe Photoshop",
-    "Adobe Illustrator",
-    "Adobe After Effects",
-    "Adobe Premiere Pro",
-    "Adobe XD",
-  ],
-  robots: "index, follow",
-  openGraph: {
-    images:
-      "https://i.ibb.co/3PJzhXw/B58-A4-A9-C-C3-BE-4-E18-AEDD-8639-B169-A57-D.png",
-    title: "Prakash | Graphic Designer & Video Editor Portfolio",
-    description:
-      "Graphic Designer & Video Editor with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.",
-  },
-  twitter: {
-    images:
-      "https://i.ibb.co/3PJzhXw/B58-A4-A9-C-C3-BE-4-E18-AEDD-8639-B169-A57-D.png",
-    title: "Prakash | Graphic Designer & Video Editor Portfolio",
-    description:
-      "Graphic Designer & Video Editor with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await client
+    .fetch(`*[_type == "profile"][0] { name, title }`)
+    .catch(() => null);
+
+  const name = profile?.name || "Prakash";
+  const title = profile?.title || "Graphic Designer & Video Editor";
+  const description = `${title} with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.`;
+
+  return {
+    title: `${name} | ${title} Portfolio`,
+    description,
+    keywords: [
+      "Graphic Designer",
+      "Video Editor",
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "Adobe After Effects",
+      "Adobe Premiere Pro",
+      "Adobe XD",
+    ],
+    robots: "index, follow",
+    openGraph: {
+      images:
+        "https://i.ibb.co/3PJzhXw/B58-A4-A9-C-C3-BE-4-E18-AEDD-8639-B169-A57-D.png",
+      title: `${name} | ${title} Portfolio`,
+      description,
+    },
+    twitter: {
+      images:
+        "https://i.ibb.co/3PJzhXw/B58-A4-A9-C-C3-BE-4-E18-AEDD-8639-B169-A57-D.png",
+      title: `${name} | ${title} Portfolio`,
+      description,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
