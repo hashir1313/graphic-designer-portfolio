@@ -24,6 +24,13 @@ export const profileType = defineType({
       description: 'e.g., Crafting visual stories that inspire and engage',
       type: 'string',
     }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      description: 'SEO description for search engines and social previews',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    }),
 
     defineField({
       name: 'aboutMe1',

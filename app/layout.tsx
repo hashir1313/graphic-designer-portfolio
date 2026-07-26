@@ -15,15 +15,16 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const profile = await client
-    .fetch(`*[_type == "profile"][0] { name, title }`)
+    .fetch(`*[_type == "profile"][0] { name, title, metaDescription }`)
     .catch(() => null);
 
   const name = profile?.name || "Prakash";
   const title = profile?.title || "Graphic Designer & Video Editor";
+  const description = profile?.metaDescription || `${name} — ${title} portfolio.`;
 
   return {
     title: `${name} | ${title} Portfolio`,
-    description: `${title} with expertise in Adobe Photoshop, Adobe Illustrator, Adobe After Effects, Adobe Premiere Pro, and Adobe XD. Passionate about creating visual stories that inspire and engage.`,
+    description,
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "any" },
