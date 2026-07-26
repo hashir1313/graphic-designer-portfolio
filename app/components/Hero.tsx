@@ -33,7 +33,7 @@ export default function Hero({ profile }: HeroProps) {
   const email = profile?.email || EMAIL;
 
   const profileImageUrl = profile?.profileImage
-    ? urlFor(profile.profileImage).width(300).height(300).url()
+    ? urlFor(profile.profileImage).width(600).height(600).url()
     : "/assets/profile-picture.png";
 
   return (
